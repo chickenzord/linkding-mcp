@@ -30,4 +30,5 @@ jobs:
           version: '~> v2'
           args: release --clean
         env:
+          TAP_GITHUB_TOKEN: ${{ secrets.TAP_GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
