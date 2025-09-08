@@ -34,8 +34,13 @@ func main() {
 		bindAddr = ":8080"
 	}
 
-	if linkdingURL == "" || apiToken == "" {
-		fmt.Fprintf(os.Stderr, "Error: LINKDING_URL and LINKDING_API_TOKEN environment variables are required\n")
+	if linkdingURL == "" {
+		fmt.Fprintf(os.Stderr, "Error: LINKDING_URL environment variable is required\n")
+		os.Exit(1)
+	}
+
+	if apiToken == "" {
+		fmt.Fprintf(os.Stderr, "Error: LINKDING_API_TOKEN environment variable is required\n")
 		os.Exit(1)
 	}
 
