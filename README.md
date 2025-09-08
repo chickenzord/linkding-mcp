@@ -1,5 +1,12 @@
 # Linkding MCP Server
 
+![MCP Server](https://badge.mcpx.dev?type=server)
+![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/chickenzord/linkding-mcp)
+[![Go Report Card](https://goreportcard.com/badge/github.com/chickenzord/linkding-mcp)](https://goreportcard.com/report/github.com/chickenzord/linkding-mcp)
+![Go Build](https://github.com/chickenzord/linkding-mcp/actions/workflows/go.yml/badge.svg?branch=main)
+![Docker Build](https://github.com/chickenzord/linkding-mcp/actions/workflows/docker.yml/badge.svg?branch=main)
+![Code License](https://img.shields.io/github/license/chickenzord/linkding-mcp)
+
 A Model Context Protocol (MCP) server that provides seamless integration with [Linkding](https://linkding.link/), a self-hosted bookmark manager. This server enables AI assistants like Claude to interact with your Linkding bookmarks through standardized MCP tools.
 
 ## Features
