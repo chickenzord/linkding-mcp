@@ -1,0 +1,11 @@
+services:
+  linkding-mcp:
+    image: ghcr.io/chickenzord/linkding-mcp:latest
+    command: ["http"]
+    environment:
+      - LINKDING_URL=https://your-linkding.example.com
+      - LINKDING_API_TOKEN=your-api-token
+      - BIND_ADDR=:8080
+    ports:
+      - "8080:8080"
+    restart: unless-stopped

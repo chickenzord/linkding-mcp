@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "linkding": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "-e", "LINKDING_URL=https://your-linkding.example.com",
+        "-e", "LINKDING_API_TOKEN=your-api-token",
+        "ghcr.io/chickenzord/linkding-mcp:latest",
+        "stdio"
+      ]
+    }
+  }
+}

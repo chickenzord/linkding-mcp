@@ -1,3 +1,106 @@
-.claude
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+linkding-mcp
+
+# Test binary
+*.test
+
+# Output of go coverage tool
+*.out
+
+# Dependency directories
+vendor/
+
+# Go workspace file
+go.work
+go.work.sum
+
+# Environment files
+.env
+.env.local
+.env.production
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Git files
+.git/
+.gitignore
+
+# Documentation (not needed in container)
+README.md
+LICENSE
+CHANGELOG.md
 *.md
-Dockerfile
+
+# CI/CD files
+.github/
+.gitlab-ci.yml
+.travis.yml
+Jenkinsfile
+
+# Docker files (avoid recursion)
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# Test files and directories
+*_test.go
+test/
+tests/
+testdata/
+coverage.html
+coverage.out
+
+# Log files
+*.log
+logs/
+
+# Temporary files
+tmp/
+temp/
+.tmp/
+
+# Cache directories
+.cache/
+.npm/
+.yarn/
+
+# Configuration files (use env vars instead)
+config.yml
+config.yaml
+config.json
+*.conf
+
+# Development scripts
+scripts/
+dev/
+development/
+
+# Example files
+examples/
+sample/
+
+# Claude Code files
+.claude/
+CLAUDE.md
+
+# Test files
+test-mcp.go

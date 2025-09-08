@@ -1,0 +1,13 @@
+{
+  "mcp.servers": [
+    {
+      "name": "linkding",
+      "command": "linkding-mcp",
+      "args": ["stdio"],
+      "env": {
+        "LINKDING_URL": "https://your-linkding.example.com",
+        "LINKDING_API_TOKEN": "your-api-token"
+      }
+    }
+  ]
+}
