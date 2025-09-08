@@ -31,6 +31,7 @@ func main() {
 	switch mode {
 	case "http":
 		fmt.Printf("Starting Linkding-MCP HTTP server on %s\n", bindAddr)
+
 		if err := mcpServer.RunHTTP(ctx, bindAddr); err != nil {
 			fmt.Fprintf(os.Stderr, "Error running MCP server: %v\n", err)
 			os.Exit(1)

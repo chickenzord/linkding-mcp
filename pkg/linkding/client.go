@@ -84,15 +84,18 @@ func (c *Client) makeRequest(ctx context.Context, method, endpoint string, body 
 	url := c.baseURL + endpoint
 
 	var reqBody *bytes.Buffer
+
 	if body != nil {
 		jsonData, err := json.Marshal(body)
 		if err != nil {
 			return nil, fmt.Errorf("failed to marshal request body: %w", err)
 		}
+
 		reqBody = bytes.NewBuffer(jsonData)
 	}
 
 	var req *http.Request
+
 	var err error
 
 	if reqBody != nil {
@@ -106,6 +109,7 @@ func (c *Client) makeRequest(ctx context.Context, method, endpoint string, body 
 	}
 
 	req.Header.Set("Authorization", "Token "+c.apiToken)
+
 	if body != nil {
 		req.Header.Set("Content-Type", "application/json")
 	}
@@ -120,9 +124,11 @@ func (c *Client) GetBookmarks(ctx context.Context, limit, offset int, query stri
 	if limit > 0 {
 		params.Set("limit", strconv.Itoa(limit))
 	}
+
 	if offset > 0 {
 		params.Set("offset", strconv.Itoa(offset))
 	}
+
 	if query != "" {
 		params.Set("q", query)
 	}
@@ -135,7 +141,10 @@ func (c *Client) GetBookmarks(ctx context.Context, limit, offset int, query stri
 	if err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
+
+	defer func() {
+		_ = resp.Body.Close()
+	}()
 
 	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("API request failed with status %d", resp.StatusCode)
@@ -154,7 +163,10 @@ func (c *Client) CreateBookmark(ctx context.Context, req CreateBookmarkRequest) 
 	if err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
+
+	defer func() {
+		_ = resp.Body.Close()
+	}()
 
 	if resp.StatusCode != http.StatusCreated {
 		return nil, fmt.Errorf("API request failed with status %d", resp.StatusCode)
@@ -175,7 +187,10 @@ func (c *Client) UpdateBookmark(ctx context.Context, id int, req CreateBookmarkR
 	if err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
+
+	defer func() {
+		_ = resp.Body.Close()
+	}()
 
 	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("API request failed with status %d", resp.StatusCode)
@@ -196,7 +211,10 @@ func (c *Client) DeleteBookmark(ctx context.Context, id int) error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+
+	defer func() {
+		_ = resp.Body.Close()
+	}()
 
 	if resp.StatusCode != http.StatusNoContent {
 		return fmt.Errorf("API request failed with status %d", resp.StatusCode)
@@ -212,7 +230,10 @@ func (c *Client) ArchiveBookmark(ctx context.Context, id int) error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+
+	defer func() {
+		_ = resp.Body.Close()
+	}()
 
 	if resp.StatusCode != http.StatusNoContent {
 		return fmt.Errorf("API request failed with status %d", resp.StatusCode)
@@ -228,7 +249,10 @@ func (c *Client) UnarchiveBookmark(ctx context.Context, id int) error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+
+	defer func() {
+		_ = resp.Body.Close()
+	}()
 
 	if resp.StatusCode != http.StatusNoContent {
 		return fmt.Errorf("API request failed with status %d", resp.StatusCode)
@@ -244,6 +268,7 @@ func (c *Client) GetTags(ctx context.Context, limit, offset int) (*TagResponse, 
 	if limit > 0 {
 		params.Set("limit", strconv.Itoa(limit))
 	}
+
 	if offset > 0 {
 		params.Set("offset", strconv.Itoa(offset))
 	}
@@ -256,7 +281,10 @@ func (c *Client) GetTags(ctx context.Context, limit, offset int) (*TagResponse, 
 	if err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
+
+	defer func() {
+		_ = resp.Body.Close()
+	}()
 
 	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("API request failed with status %d", resp.StatusCode)
