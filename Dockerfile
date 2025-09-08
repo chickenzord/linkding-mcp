@@ -13,9 +13,14 @@ RUN go mod download
 # Copy source code
 COPY . .
 
+# Build arguments for version information
+ARG VERSION=dev
+ARG GIT_COMMIT=unknown
+ARG BUILD_DATE=unknown
+
 # Build the application
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build \
-    -ldflags='-w -s -extldflags "-static"' \
+    -ldflags="-w -s -extldflags '-static' -X 'github.com/chickenzord/linkding-mcp/internal/version.Version=${VERSION}' -X 'github.com/chickenzord/linkding-mcp/internal/version.GitCommit=${GIT_COMMIT}' -X 'github.com/chickenzord/linkding-mcp/internal/version.BuildDate=${BUILD_DATE}'" \
     -a -installsuffix cgo \
     -o linkding-mcp ./cmd/linkding-mcp
 

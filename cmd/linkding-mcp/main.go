@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/chickenzord/linkding-mcp/internal/server"
+	"github.com/chickenzord/linkding-mcp/internal/version"
 )
 
 func main() {
@@ -15,7 +16,19 @@ func main() {
 	linkdingURL := os.Getenv("LINKDING_URL")
 	apiToken := os.Getenv("LINKDING_API_TOKEN")
 
+	if len(os.Args) < 2 {
+		fmt.Fprintf(os.Stderr, "Usage: %s <mode>\n", os.Args[0])
+		fmt.Fprintf(os.Stderr, "Modes: stdio, http, version\n")
+		os.Exit(1)
+	}
+
 	mode := os.Args[1]
+
+	if mode == "version" {
+		versionInfo := version.Get()
+		fmt.Println(versionInfo.String())
+		os.Exit(0)
+	}
 
 	if bindAddr == "" {
 		bindAddr = ":8080"

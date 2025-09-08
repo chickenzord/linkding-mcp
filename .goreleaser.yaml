@@ -2,18 +2,34 @@ before:
   hooks:
     - go mod tidy
     - go generate ./...
+
 builds:
-  - env:
+  - id: linkding-mcp
+    main: ./cmd/linkding-mcp
+    binary: linkding-mcp
+    env:
       - CGO_ENABLED=0
     goos:
       - linux
       - windows
       - darwin
+    goarch:
+      - amd64
+      - arm64
+    goarm:
+      - "7"
     flags:
       - -trimpath
+    ldflags:
+      - -s -w
+      - -X github.com/chickenzord/linkding-mcp/internal/version.Version={{.Version}}
+      - -X github.com/chickenzord/linkding-mcp/internal/version.GitCommit={{.FullCommit}}
+      - -X github.com/chickenzord/linkding-mcp/internal/version.BuildDate={{.Date}}
+    mod_timestamp: '{{ .CommitTimestamp }}'
 
 archives:
-  - format: tar.gz
+  - id: default
+    format: tar.gz
     # this name template makes the OS and Arch compatible with the results of uname.
     name_template: >-
       {{ .ProjectName }}_
@@ -24,8 +40,12 @@ archives:
       {{- if .Arm }}v{{ .Arm }}{{ end }}
     # use zip for windows archives
     format_overrides:
-    - goos: windows
-      format: zip
+      - goos: windows
+        format: zip
+    files:
+      - README.md
+      - LICENSE
+      - examples/*
 
 checksum:
   name_template: 'checksums.txt'
@@ -40,6 +60,52 @@ changelog:
       - '^ci:'
       - '^nit:'
       - '^chore:'
+      - '^build:'
+      - Merge pull request
+      - Merge branch
+  groups:
+    - title: Features
+      regexp: "^.*feat[(\\w)]*:+.*$"
+      order: 0
+    - title: 'Bug fixes'
+      regexp: "^.*fix[(\\w)]*:+.*$"
+      order: 1
+    - title: 'Enhancements'
+      regexp: "^.*enhancement[(\\w)]*:+.*$"
+      order: 2
+    - title: Others
+      order: 999
+
+# Release configuration
+release:
+  draft: false
+  prerelease: auto
+  mode: replace
+  header: |
+    ## Linkding MCP Server {{ .Tag }}
+    
+    Model Context Protocol server for [Linkding](https://linkding.link/) bookmark manager integration.
+    
+    ### Installation
+    
+    **Binary Download:**
+    Download the appropriate binary for your platform from the assets below.
+    
+    **Go Install:**
+    ```bash
+    go install github.com/chickenzord/linkding-mcp/cmd/linkding-mcp@{{ .Tag }}
+    ```
+    
+    **Docker:**
+    ```bash
+    docker pull ghcr.io/chickenzord/linkding-mcp:{{ .Tag }}
+    ```
+  footer: |
+    **Full Changelog**: https://github.com/chickenzord/linkding-mcp/compare/{{ .PreviousTag }}...{{ .Tag }}
+
+# Universal binaries for macOS
+universal_binaries:
+  - replace: false
 
 # yaml-language-server: $schema=https://goreleaser.com/static/schema.json
 # vim: set ts=2 sw=2 tw=0 fo=cnqoj

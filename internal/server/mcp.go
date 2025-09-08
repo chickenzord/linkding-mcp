@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/chickenzord/linkding-mcp/internal/version"
 	"github.com/chickenzord/linkding-mcp/pkg/linkding"
 	mcpsdk "github.com/modelcontextprotocol/go-sdk/mcp"
 )
@@ -180,9 +181,10 @@ func NewMCP(linkdingURL, apiToken string) *MCPServer {
 	}
 
 	// Create MCP server with implementation info
+	versionInfo := version.Get()
 	mcpServer := mcpsdk.NewServer(&mcpsdk.Implementation{
 		Name:    "linkding-mcp",
-		Version: "1.0.0",
+		Version: versionInfo.Version,
 		Title:   "Linkding MCP Server",
 	}, nil)
 
