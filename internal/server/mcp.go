@@ -49,12 +49,15 @@ func (s *MCPServer) handleSearchBookmarks(ctx context.Context, req *mcpsdk.CallT
 	result := fmt.Sprintf("Found %d bookmarks:\n\n", len(bookmarks.Results))
 	for _, bookmark := range bookmarks.Results {
 		result += fmt.Sprintf("• **%s**\n  URL: %s\n", bookmark.Title, bookmark.URL)
+
 		if bookmark.Description != "" {
 			result += fmt.Sprintf("  Description: %s\n", bookmark.Description)
 		}
+
 		if len(bookmark.TagNames) > 0 {
 			result += fmt.Sprintf("  Tags: %v\n", bookmark.TagNames)
 		}
+
 		result += "\n"
 	}
 
@@ -100,9 +103,11 @@ func (s *MCPServer) handleCreateBookmark(ctx context.Context, req *mcpsdk.CallTo
 
 	result := fmt.Sprintf("✅ Bookmark created successfully!\n\n• **%s**\n  URL: %s\n  ID: %d",
 		bookmark.Title, bookmark.URL, bookmark.ID)
+
 	if bookmark.Description != "" {
 		result += fmt.Sprintf("\n  Description: %s", bookmark.Description)
 	}
+
 	if len(bookmark.TagNames) > 0 {
 		result += fmt.Sprintf("\n  Tags: %v", bookmark.TagNames)
 	}
@@ -200,5 +205,6 @@ func NewMCP(linkdingURL, apiToken string) *MCPServer {
 	}, s.handleGetTags)
 
 	s.mcpServer = mcpServer
+
 	return s
 }
