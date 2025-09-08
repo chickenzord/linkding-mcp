@@ -62,13 +62,26 @@ docker run --rm -p 8080:8080 \
   ghcr.io/chickenzord/linkding-mcp:latest http
 ```
 
-### Option 2: Go Install
+### Option 2: Homebrew (macOS/Linux)
+
+```bash
+# Add the tap
+brew tap chickenzord/tap
+
+# Install linkding-mcp
+brew install linkding-mcp
+
+# Install latest development version
+brew install --HEAD linkding-mcp
+```
+
+### Option 3: Go Install
 
 ```bash
 go install github.com/chickenzord/linkding-mcp/cmd/linkding-mcp@latest
 ```
 
-### Option 3: Build from Source
+### Option 4: Build from Source
 
 ```bash
 git clone https://github.com/chickenzord/linkding-mcp.git

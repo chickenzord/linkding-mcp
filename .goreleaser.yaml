@@ -85,19 +85,24 @@ release:
   mode: replace
   header: |
     ## Linkding MCP Server {{ .Tag }}
-    
+
     Model Context Protocol server for [Linkding](https://linkding.link/) bookmark manager integration.
-    
+
     ### Installation
-    
+
     **Binary Download:**
     Download the appropriate binary for your platform from the assets below.
-    
+
+    **Homebrew (macOS/Linux):**
+    ```bash
+    brew install chickenzord/tap/linkding-mcp
+    ```
+
     **Go Install:**
     ```bash
     go install github.com/chickenzord/linkding-mcp/cmd/linkding-mcp@{{ .Tag }}
     ```
-    
+
     **Docker:**
     ```bash
     docker pull ghcr.io/chickenzord/linkding-mcp:{{ .Tag }}
@@ -108,6 +113,30 @@ release:
 # Universal binaries for macOS
 universal_binaries:
   - replace: false
+
+# Homebrew tap
+brews:
+  - description: Model Context Protocol server for Linkding bookmark manager
+    homepage: https://github.com/chickenzord/linkding-mcp
+    directory: Formula
+    download_strategy: CurlDownloadStrategy
+    license: "MIT"
+    custom_block: |
+      head do
+        url "https://github.com/chickenzord/linkding-mcp.git", branch: "main"
+        depends_on "go" => :build
+      end
+    install: |
+      if build.head?
+        system "go", "build", *std_go_args(ldflags: "-s -w -X github.com/chickenzord/linkding-mcp/internal/version.Version={{.Version}} -X github.com/chickenzord/linkding-mcp/internal/version.GitCommit={{.FullCommit}} -X github.com/chickenzord/linkding-mcp/internal/version.BuildDate={{.Date}}"), "./cmd/linkding-mcp"
+      else
+        bin.install "linkding-mcp"
+      end
+    repository:
+      owner: chickenzord
+      name: homebrew-tap
+      branch: main
+      token: "{{ .Env.TAP_GITHUB_TOKEN }}"
 
 # yaml-language-server: $schema=https://goreleaser.com/static/schema.json
 # vim: set ts=2 sw=2 tw=0 fo=cnqoj
